@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="booking">
+    <parameterMap type="map" id="bookingMap">
+        <parameter property="checkOutDate" jdbcType="DATE"/>
+        <parameter property="checkInDate" jdbcType="DATE"/>
+        <!-- 다른 파라미터 설정 -->
+    </parameterMap>
+    <select id="findByBookingMemberId" resultType="booking">
+        select
+            *
+        from
+            tb_booking
+        where
+            booking_member_id = #{bookingMemberId}
+    </select>
+    <select id="checkRoomAvailability" resultType="booking">
+        SELECT
+            booking_room_num
+        FROM
+            tb_booking
+        WHERE
+            booking_room_num = #{bookingRoomNum}
+    </select>
+
+
+    <delete id="deleteBooking">
+        delete from
+            tb_booking
+        where
+            booking_num = #{bookingNum}
+    </delete>
+
+    <select id="findAll" resultType="booking">
+        select
+            *
+        from
+            tb_booking
+        order by
+            booking_num desc
+    </select>
+    <select id="getTotalCount" resultType="_int">
+        select
+            count(*)
+        from
+            tb_booking
+    </select>
+    <select id="findByBookingNum" resultType="booking">
+        select *
+        from tb_booking
+        where
+            booking_num = #{bookingNum}
+    </select>
+    <select id="checkBookingOverlap" resultType="_int" >
+
+        SELECT COUNT(*)
+        FROM tb_booking
+        WHERE booking_room_num = #{bookingRoomNum}
+          and (checkin_date &lt;= #{checkOutDate} and checkout_date &gt;= #{checkInDate})
+          AND booking_num != #{bookingNum}
+
+    </select>
+
+    <update id="updateBooking">
+        update
+            tb_booking
+        set
+            booking_room_num=#{bookingRoomNum},
+            checkin_date=#{checkInDate},
+            checkout_date=#{checkOutDate}
+        where
+            booking_num=#{bookingNum}
+    </update>
+
+    <select id="findBookingAll" resultMap="bookingVoMap">
+        SELECT *
+        FROM tb_room r
+        WHERE r.room_type = #{roomType}
+          AND r.room_people &gt;= #{roomPeople}
+          AND NOT EXISTS (
+            SELECT 1
+            FROM tb_booking b
+            WHERE (b.checkin_date &lt;= #{checkOutDate} AND b.checkout_date &gt;= #{checkInDate})
+              AND b.booking_room_num = r.room_num
+
+        )
+    </select>
+    <resultMap id="bookingVoMap" type="bookingVo">
+        <id column="booking_num" property="bookingNum"/>
+        <result column="booking_member_id" property="bookingMemberId"/>
+        <result column="booking_room_num" property="bookingRoomNum"/>
+        <result column="booking_name" property="bookingName"/>
+        <result column="checkin_date" property="checkInDate" />
+        <result column="checkout_date" property="checkOutDate" />
+        <result column="booking_tour_num" property="bookingTourNum"/>
+        <collection property="rooms" ofType="room">
+            <id column="room_num" property="roomNum" />
+            <result column="room_type" property="roomType" />
+            <result column="room_price" property="roomPrice"/>
+            <result column="room_people" property="roomPeople"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insertBooking">
+        insert into
+            tb_booking
+        values (
+                   seq_booking_num.NEXTVAL,#{bookingMemberId},#{bookingRoomNum},#{bookingName},#{checkInDate},#{checkOutDate},#{bookingTourNum}
+               )
+    </insert>
+</mapper>
+
