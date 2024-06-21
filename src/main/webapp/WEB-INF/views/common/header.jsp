@@ -57,7 +57,7 @@
             <div class="flex-1 text-center">
                 <span class="items-center justify-center self-center text-2xl font-semibold whitespace-nowrap">
                     <a id="title" href="${pageContext.request.contextPath}">
-                        CRUD Hotel123
+                        CRUD Hotel
                     </a>
                 </span>
             </div>
