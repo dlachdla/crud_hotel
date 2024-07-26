@@ -51,8 +51,8 @@
         padding-bottom: 100px;
     }
 
-    .content > section {
-        /*margin: 0 auto;*/
+    .content >  {
+        /*margin: 0section auto;*/
         max-width: 800px; /* 섹션의 최대 너비를 설정할 수 있습니다 */
         max-height: 550px;
         background-color: white; /* 배경색을 흰색으로 설정 */
