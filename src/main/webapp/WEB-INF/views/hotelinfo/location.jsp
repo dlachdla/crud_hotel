@@ -113,7 +113,7 @@
 
 </body>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4d27601849c9209286843d85554892ed"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=4d27601849c9209286843d85554892ed"></script>
 
 <script type="text/javascript">
     var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
