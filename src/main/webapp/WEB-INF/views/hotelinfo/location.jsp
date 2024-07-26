@@ -54,7 +54,7 @@
     .content > section {
         /*margin: 0 auto;*/
         max-width: 800px; /* 섹션의 최대 너비를 설정할 수 있습니다 */
-        max-height: 700px;
+        max-height: 550px;
         background-color: white; /* 배경색을 흰색으로 설정 */
         padding: 20px; /* 내부 여백을 설정 */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과를 추가 */
